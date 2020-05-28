@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script>
+        function nactiZpravy() {
+            let url = "https://nodejs-3260.rostiapp.cz/chat2/listMsgs";
+            fetch(url).then(function (response) {
+                response.text().then(function (text) {
+                    let obj = JSON.parse(text);
+                    let s = "";
+                    for (let m of obj) { //v obj je seznam zprav - pomoci tohoto cyklu for projdeme vsechny zpravy
+                        s = s + m.time + " " + m.msg + "<br>"; //u kazde zpravy ukazeme cas vlozeni a text zpravy a odradkujeme
+                    }
+                    document.getElementById("zpravy").innerHTML = s;
+                });
+            });
+        }
+        function poNacteni() { //tuto funkci zavolame po nacteni stranky
+            setInterval(nactiZpravy, 1000); //spusti opakovane volani funkce nactiZpravy po 1s
+        }
+    </script>
+</head>
+<body onload="poNacteni()">
+
+<h1>Chat</h1>
+
+<div id="zpravy"></div>
+
+</body>
+</html>
